@@ -1,0 +1,91 @@
+TASK 4 – DESIGN CLASSES, OBJECTS AND CONSTRUCTORS
+
+The Smart-Parking System is designed using multiple classes. Each class has a specific responsibility.
+
+1. Vehicle
+
+Fields:
+• regNo
+
+Methods:
+• getRegNo()
+• calculateFee()
+• equals()
+• hashCode()
+• toString()
+
+2. ParkingFacility
+
+Fields:
+• slots
+
+Methods:
+• allocate()
+• release()
+
+3. ParkingTicket
+
+Fields:
+• ticketNumber
+• vehicleNo
+• floor
+• slot
+
+Methods:
+• getter methods
+• toString()
+
+4. Constructors
+
+A default constructor creates an object using default values.
+
+A parameterised constructor accepts values required to initialise an object.
+
+An overloaded constructor provides multiple ways of creating the same type of object.
+
+5. this Keyword
+
+The this keyword refers to the current object. It is used when constructor parameters have the same names as instance variables.
+
+Example:
+
+this.vehicleNo = vehicleNo;
+
+6. Constructor Chaining
+
+Constructor chaining is used to call one constructor from another using this().
+
+This reduces repeated initialisation code and ensures that object creation follows one consistent path.
+
+7. Copy Constructor
+
+A copy constructor can be used when a new ParkingTicket must be created using the values of an existing ticket. However, a copy constructor is not required for the basic parking process because every ticket should normally receive its own unique ticket number.
+
+8. Memory
+
+Reference variables are stored in stack memory while the actual objects are created in heap memory.
+
+For example:
+
+ParkingTicket ticket = new ParkingTicket();
+
+The reference variable ticket refers to the ParkingTicket object stored in the heap.
+
+9. Alternative Concept
+
+An alternative is to create an object using a default constructor and then call setter methods.
+
+Example:
+
+ParkingTicket t = new ParkingTicket();
+t.setVehicleNo("TN01AB1111");
+
+Another alternative is a static factory method.
+
+The constructor approach provides direct validation and ensures that important fields are initialised when the object is created.
+
+For n ParkingTicket objects, object creation requires O(n) total time and O(n) space.
+
+Conclusion:
+
+Parameterized and overloaded constructors with constructor chaining provide clear and controlled object creation and reduce duplicated code.
