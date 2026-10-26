@@ -1,0 +1,84 @@
+TASK 6 – DESIGN THE INHERITANCE HIERARCHY
+
+The vehicle hierarchy uses hierarchical and multilevel inheritance.
+
+Vehicle is the superclass.
+
+TwoWheeler and Car directly extend Vehicle.
+
+ElectricCar extends Car, making ElectricCar a multilevel inheritance example.
+
+Hierarchy:
+
+Vehicle
+├── TwoWheeler
+└── Car
+    └── ElectricCar
+
+1. Vehicle
+
+Vehicle contains common information and behaviour shared by all vehicles.
+
+The registration number is stored in Vehicle.
+
+2. TwoWheeler
+
+TwoWheeler inherits the registration number and common vehicle behaviour from Vehicle.
+
+It adds its own hourly rate.
+
+3. Car
+
+Car inherits from Vehicle and provides a car-specific hourly rate.
+
+4. ElectricCar
+
+ElectricCar inherits all the behaviour of Car and can additionally implement charging capability.
+
+5. Use of super
+
+The super keyword is used to call the constructor of the superclass.
+
+Example:
+
+public Car(String regNo) {
+    super(regNo);
+}
+
+This ensures that the regNo field defined in Vehicle is properly initialised.
+
+6. Constructor Execution Order
+
+When:
+
+new ElectricCar("TN03C3");
+
+is executed, the constructor execution order is:
+
+1. Vehicle constructor
+2. Car constructor
+3. ElectricCar constructor
+
+The superclass constructor executes before the subclass constructor.
+
+7. Alternative – Composition
+
+Instead of inheritance, a single Vehicle class could contain a VehicleType object.
+
+For example:
+
+Vehicle has-a VehicleType.
+
+The VehicleType object could contain the hourly rate.
+
+Inheritance requires creating a new subclass for each new vehicle type.
+
+Composition can make adding new vehicle types easier because a new VehicleType object can be introduced without creating a complete new Vehicle subclass.
+
+Fee calculation remains O(1) in both approaches because the rate lookup is constant-time.
+
+Inheritance can require more classes, while composition can reduce the number of subclasses.
+
+Conclusion:
+
+Inheritance is suitable for the current design because TwoWheeler, Car and ElectricCar are specialised forms of Vehicle and share common vehicle behaviour.
