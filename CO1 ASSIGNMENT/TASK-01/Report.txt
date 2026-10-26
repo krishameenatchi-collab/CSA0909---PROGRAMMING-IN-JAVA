@@ -1,0 +1,186 @@
+TASK 1 – UNDERSTAND THE PROBLEM AND IDENTIFY THE OBJECTS
+
+1. Problem Analysis
+
+The university requires a multi-level Campus Smart-Parking System for students, staff and visitors. The parking facility contains multiple floors, and each floor contains a fixed number of parking slots. The system must support different vehicle types such as two-wheelers, cars and electric vehicles.
+
+When a vehicle enters the parking facility, the system must identify a suitable free parking slot, allocate the slot, generate a unique parking ticket and record the entry time. When the vehicle leaves, the system must release the slot and calculate the parking fee based on the vehicle type and parking duration.
+
+Students and staff with a valid monthly pass can park free of charge, whereas visitors must pay the applicable parking fee.
+
+2. Inputs
+
+The system receives the following inputs:
+
+• Vehicle registration number
+• Vehicle type
+• User type – student, staff or visitor
+• Entry time
+• Exit time
+• Parking floor
+• Parking slot
+• Pass information, if applicable
+• Parking duration
+
+3. Outputs
+
+The system produces:
+
+• Allocated floor and slot number
+• Unique parking ticket number
+• Vehicle registration number
+• Entry and exit details
+• Parking duration
+• Parking fee
+• Slot release confirmation
+• Error message or null when no suitable slot is available
+• Validation result for invalid slot or duplicate registration number
+
+4. Candidate Classes
+
+Vehicle:
+Represents a general vehicle entering the parking facility. It stores common vehicle information such as registration number and provides common parking behaviour.
+
+TwoWheeler:
+Represents a two-wheeler. It extends Vehicle and provides the two-wheeler-specific parking rate.
+
+Car:
+Represents a car. It extends Vehicle and provides the car-specific parking rate.
+
+ElectricCar:
+Represents an electric car. It extends Car and additionally supports charging through the Chargeable interface.
+
+ParkingFacility:
+Represents the complete parking facility. It manages floors, slots, allocation and release of parking slots.
+
+ParkingTicket:
+Represents a ticket issued to a vehicle. It stores the ticket number, vehicle information, slot information and entry time.
+
+User:
+Represents a person using the parking facility.
+
+Student:
+Represents a student user.
+
+Staff:
+Represents a staff user.
+
+Visitor:
+Represents a visitor using the parking facility.
+
+Pass:
+Represents a parking pass and stores information about its validity.
+
+5. Candidate Methods
+
+The important actions in the system become methods:
+
+allocate() – allocates a free parking slot.
+
+release() – releases an occupied parking slot.
+
+calculateFee() – calculates the parking fee.
+
+chargingFee() – calculates the charging fee for an electric vehicle.
+
+validatePass() – checks whether a parking pass is valid.
+
+getRegNo() – returns the registration number.
+
+equals() – compares vehicles using their registration numbers.
+
+hashCode() – generates a hash value based on the registration number.
+
+toString() – returns a readable representation of an object.
+
+6. Responsibilities
+
+Vehicle:
+Stores common vehicle information and defines common vehicle behaviour.
+
+TwoWheeler:
+Defines the rate applicable to two-wheelers.
+
+Car:
+Defines the rate applicable to cars.
+
+ElectricCar:
+Adds charging capability to a car.
+
+ParkingFacility:
+Maintains parking slots and handles allocation and release.
+
+ParkingTicket:
+Maintains ticket information and ticket identification.
+
+User:
+Represents the type of parking user.
+
+Pass:
+Maintains parking pass validity.
+
+7. Business Rules
+
+1. A parking slot cannot contain two vehicles at the same time.
+2. A vehicle can occupy only one parking slot.
+3. Every parking ticket must have a unique ticket number.
+4. A released slot becomes available for another vehicle.
+5. An invalid floor number must not be accepted.
+6. An invalid slot number must not be accepted.
+7. A vehicle cannot be allocated when all suitable slots are occupied.
+8. Students and staff with a valid monthly pass park free of charge.
+9. Visitors without a valid free parking pass pay the applicable parking fee.
+10. Parking duration must not be negative.
+11. Vehicles with the same registration number should be treated as equal.
+12. An electric vehicle can use charging facilities.
+
+8. Assumptions
+
+1. Vehicle registration numbers are unique.
+2. Each vehicle occupies one parking slot.
+3. The first suitable free slot is allocated.
+4. Parking duration is calculated from entry and exit time.
+5. Parking fees are calculated using started hours.
+6. A parking ticket is generated when a vehicle enters.
+7. A released parking slot can immediately be reused.
+8. The parking facility can have different numbers of slots on different floors.
+
+9. Alternative Concept – Parallel Arrays
+
+Instead of creating a Vehicle object, the system could store information using parallel arrays:
+
+String[] regNo;
+String[] type;
+String[] entryTime;
+
+The same index in all arrays would represent one vehicle.
+
+For example:
+
+regNo[0] = "TN01AB1111"
+type[0] = "Car"
+entryTime[0] = "09:00"
+
+To find a vehicle by registration number, the program would perform a linear search through regNo[].
+
+10. Complexity Comparison
+
+Vehicle object approach:
+
+Searching for a vehicle by registration number requires checking the objects one by one, so the worst-case time complexity is O(n).
+
+The space required for n vehicles is O(n).
+
+Parallel-array approach:
+
+Searching regNo[] also requires a linear search, so the worst-case time complexity is O(n).
+
+The space required is also O(n).
+
+However, the object-oriented approach is easier to maintain. If a new attribute such as colour or owner name is required, a new field can be added to the Vehicle class. In the parallel-array approach, another array must be created and all arrays must remain correctly synchronized.
+
+Therefore, the object-oriented approach is more suitable for the Smart-Parking System because it provides better encapsulation, readability, extensibility and maintainability.
+
+Conclusion:
+
+The Smart-Parking System is best represented using classes and objects because vehicles, tickets, users and the parking facility have their own data and responsibilities. The object-oriented design also makes it easier to extend the system when new vehicle types and pricing rules are introduced.
