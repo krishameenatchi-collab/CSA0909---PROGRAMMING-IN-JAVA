@@ -1,0 +1,153 @@
+TASK 11 – IMPLEMENT, TEST AND DEFEND THE DESIGN
+
+1. Complete System
+
+The complete Smart-Parking System combines the object-oriented concepts implemented in the previous tasks.
+
+The system supports:
+
+• Vehicle registration
+• Vehicle type identification
+• Parking slot allocation
+• Parking ticket generation
+• Parking duration
+• Parking fee calculation
+• Slot release
+• Different vehicle types
+• Monthly pass validation
+• Duplicate registration validation
+• Invalid slot validation
+
+2. Normal Operation
+
+When a vehicle enters, the system checks its registration number and searches for a suitable free slot.
+
+After a slot is found, the vehicle is stored in the slot and a ParkingTicket object is created.
+
+When the vehicle exits, the system identifies its ticket, calculates the parking duration and fee, releases the slot and removes the ticket from active parking records.
+
+3. Boundary Cases
+
+The following boundary cases are tested:
+
+• Last available parking slot
+• Zero-minute parking
+• Exactly 60 minutes
+• Parking duration exactly at a fee slab boundary
+• Parking facility with no available slots
+
+4. Invalid Cases
+
+The following invalid cases are tested:
+
+• Unknown vehicle type
+• Duplicate registration number
+• Invalid floor number
+• Invalid slot number
+• Negative parking duration
+
+5. Test Table
+
+Test Case 1:
+Input: Valid two-wheeler enters an available parking facility.
+Expected: First available slot is allocated.
+Actual: First available slot is allocated.
+Status: PASS
+
+Test Case 2:
+Input: All parking slots are occupied.
+Expected: No slot is allocated.
+Actual: null/no available slot.
+Status: PASS
+
+Test Case 3:
+Input: Vehicle attempts to use an invalid slot.
+Expected: Operation is rejected.
+Actual: Operation is rejected.
+Status: PASS
+
+Test Case 4:
+Input: Same registration number is entered twice.
+Expected: Duplicate registration is rejected.
+Actual: Duplicate registration is rejected.
+Status: PASS
+
+Test Case 5:
+Input: Vehicle parks for zero minutes.
+Expected: Fee follows the defined zero-duration rule.
+Actual: Program output follows the implemented rule.
+Status: PASS
+
+Test Case 6:
+Input: Vehicle parks for exactly 60 minutes.
+Expected: One billable hour.
+Actual: One billable hour.
+Status: PASS
+
+6. Manual Daily Collection
+
+Example scenario:
+
+TwoWheeler:
+3 hours × Rs 10 = Rs 30
+
+Car:
+3 hours × Rs 30 = Rs 90
+
+ElectricCar:
+3 hours × Rs 30 = Rs 90
+Charging:
+10 kWh × Rs 12 = Rs 120
+
+Total:
+
+Rs 30 + Rs 90 + Rs 90 + Rs 120 = Rs 330
+
+The program output is compared with this manually calculated total.
+
+7. Object-Oriented Evaluation
+
+Encapsulation:
+Private fields protect the internal state of objects.
+
+Inheritance:
+TwoWheeler, Car and ElectricCar inherit common behaviour from Vehicle.
+
+Polymorphism:
+Vehicle references can refer to different vehicle types and the correct overridden behaviour is selected at runtime.
+
+Abstraction:
+Vehicle is abstract and Chargeable defines charging capability.
+
+Packages:
+Classes are organised according to their responsibilities.
+
+8. Limitation
+
+One limitation of the basic design is that parking rules and pricing can become more complex when many special cases are introduced. A separate pricing-rule abstraction can be introduced in the future to prevent pricing logic from becoming distributed across multiple classes.
+
+9. Alternative Active-Ticket Storage
+
+Array:
+
+Finding a ticket requires a linear search.
+
+Time complexity: O(n)
+
+ArrayList<ParkingTicket>:
+
+Searching by registration number also requires a linear search.
+
+Time complexity: O(n)
+
+HashMap<String, ParkingTicket>:
+
+If registration number is used as the key, ticket lookup is expected to be O(1) on average.
+
+Therefore, HashMap is more suitable when the system needs fast ticket lookup for a large number of parked vehicles.
+
+All three approaches require O(n) space for n active tickets.
+
+10. Final Evaluation
+
+The object-oriented design provides a clear separation of responsibilities and supports future extension. The test results demonstrate that normal, boundary and invalid operations can be handled correctly.
