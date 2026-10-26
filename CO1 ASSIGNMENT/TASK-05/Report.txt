@@ -1,0 +1,71 @@
+TASK 5 – APPLY STATIC MEMBERS AND THE OBJECT LIFE CYCLE
+
+1. Static Variable
+
+The parking ticket counter should be static because it belongs to the ParkingTicket class rather than one particular ticket object.
+
+Example:
+
+private static int nextTicketNumber = 1000;
+
+Every ParkingTicket object uses the same counter.
+
+If the counter were an instance variable, every ticket object would have its own separate counter, which could result in duplicate ticket numbers.
+
+2. Static Method
+
+A static method can be used when the operation does not depend on a particular object.
+
+For example, a utility method that validates a registration number can be static if it does not use instance data.
+
+3. Static Block
+
+A static block can be used for one-time class-level initialisation if required.
+
+4. ParkingTicket Life Cycle
+
+When a vehicle enters, a ParkingTicket object is created.
+
+The object remains reachable while it is stored or referenced by the parking system.
+
+When the vehicle leaves, the ticket can be removed from the active-ticket collection.
+
+If no references to the ParkingTicket object remain, the object becomes eligible for garbage collection.
+
+Garbage collection is performed automatically by the Java Virtual Machine.
+
+5. Passing Objects to Methods
+
+Objects can be passed to methods using reference variables.
+
+For example:
+
+processTicket(ParkingTicket ticket);
+
+The method receives a reference to the existing object.
+
+6. Returning Objects
+
+A method can also return an object.
+
+For example:
+
+ParkingTicket createTicket() {
+    return new ParkingTicket();
+}
+
+7. Alternative – Instance Counter
+
+If the ticket counter were an instance variable of ParkingFacility, each ParkingFacility object would have a separate counter.
+
+If there are two facilities, such as North and South facilities, each could maintain a separate ticket sequence.
+
+If one global ticket sequence is required across all facilities, a static counter is appropriate.
+
+For k facility objects, an instance counter requires O(k) counter storage.
+
+A single static counter requires O(1) counter storage regardless of the number of facility objects.
+
+Conclusion:
+
+The ticket counter is correctly represented as a static variable when ticket numbers must be unique across the entire system.
