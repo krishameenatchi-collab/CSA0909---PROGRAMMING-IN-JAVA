@@ -1,0 +1,160 @@
+TASK 2 – CHOOSE THE DATA REPRESENTATION
+
+1. Data Types
+
+The following Java data types are selected for the Smart-Parking System:
+
+slot number → int
+
+A slot number is a whole number, so int is suitable.
+
+vehicle registration number → String
+
+A registration number contains letters and numbers, so String is appropriate.
+
+vehicle type → String or object reference
+
+The object-oriented design represents vehicle type using subclasses such as TwoWheeler, Car and ElectricCar.
+
+entry time → LocalTime
+
+LocalTime from java.time is suitable for representing the time at which a vehicle enters.
+
+duration → int
+
+Parking duration can be stored in minutes as an integer.
+
+fee → double
+
+Parking fee may contain decimal values, so double is suitable.
+
+ticket number → int
+
+Ticket numbers are whole numbers and can be represented using int.
+
+2. Representation of Floors and Slots
+
+A jagged two-dimensional array is suitable:
+
+String[][] slots;
+
+A jagged array is selected because different floors can contain different numbers of slots.
+
+For example:
+
+Floor 0 → 20 slots
+Floor 1 → 50 slots
+Floor 2 → 100 slots
+
+The array can therefore be created as:
+
+slots = new String[3][];
+
+slots[0] = new String[20];
+slots[1] = new String[50];
+slots[2] = new String[100];
+
+A null value represents a free slot, while a vehicle registration number represents an occupied slot.
+
+3. Why a Jagged Array is Suitable
+
+A normal rectangular two-dimensional array assumes that every floor has the same number of slots. However, the parking facility may have different numbers of slots on different floors.
+
+A jagged array allows each floor to have its own array length.
+
+Therefore, the structure is flexible and matches the actual parking facility.
+
+4. Type Conversion and Casting
+
+Parking duration may be given in minutes, while billing is performed using hours.
+
+Incorrect calculation:
+
+int hours = minutes / 60;
+
+For 90 minutes:
+
+90 / 60 = 1
+
+This would incorrectly charge only one hour if every started hour must be charged.
+
+The correct integer arithmetic for ceiling division is:
+
+int hours = (minutes + 59) / 60;
+
+For example:
+
+60 minutes → 1 hour
+61 minutes → 2 hours
+90 minutes → 2 hours
+120 minutes → 2 hours
+130 minutes → 3 hours
+
+This avoids the loss of required billing precision.
+
+5. Input Method
+
+Scanner can be used to read input interactively.
+
+Example:
+
+Scanner sc = new Scanner(System.in);
+
+String vehicleNo = sc.nextLine();
+int duration = sc.nextInt();
+
+Scanner is suitable for simple console-based input and makes the program easy to test.
+
+6. Alternative Representation – One-Dimensional Array
+
+Instead of a jagged array, all slots could be stored in one one-dimensional array.
+
+The index can be calculated using:
+
+index = floor × slotsPerFloor + slot
+
+This representation works well when every floor has the same number of slots.
+
+However, if floors have different numbers of slots, the calculation becomes more complicated because slotsPerFloor is not constant for all floors.
+
+7. ArrayList Alternative
+
+An ArrayList<String[]> could store one String[] for each floor.
+
+For example:
+
+ArrayList<String[]> floors;
+
+Each element would represent one floor.
+
+This is flexible because each String[] can have a different length.
+
+8. Complexity
+
+Jagged array:
+
+Locating a particular floor and slot takes O(1) access once the floor and slot indexes are known.
+
+Searching for the first free slot may take O(N), where N is the total number of slots.
+
+Space complexity is O(N).
+
+One-dimensional array:
+
+Direct access is O(1) when the index is calculated.
+
+Searching for a free slot is O(N).
+
+Space complexity is O(N).
+
+ArrayList<String[]>:
+
+Access to a particular floor is generally O(1), and slot access within the selected array is O(1).
+
+Searching for a free slot is O(N).
+
+Space complexity is O(N).
+
+Conclusion:
+
+A jagged two-dimensional array is selected because it directly represents floors having different numbers of slots and provides simple and readable access to parking positions.
