@@ -1,0 +1,115 @@
+TASK 10 – ENFORCE ENCAPSULATION THROUGH PACKAGES AND ACCESS MODIFIERS
+
+1. Package Structure
+
+The system is divided into packages based on responsibility.
+
+parking.model
+
+Contains the main data classes such as Vehicle, Car, TwoWheeler, ElectricCar and ParkingTicket.
+
+parking.service
+
+Contains service classes such as ParkingFacility that perform parking operations.
+
+parking.app
+
+Contains the main application class used to execute the system.
+
+2. Access Modifiers
+
+private:
+
+Private is used for fields because the internal state of an object should not be directly modified from outside the class.
+
+public:
+
+Public is used for methods that form the external interface of the class, such as getters and required service methods.
+
+protected:
+
+Protected can be used for members that need to be accessed by subclasses, such as ratePerHour().
+
+default:
+
+Default access can be used when a member should only be accessible within the same package.
+
+3. Encapsulation
+
+Encapsulation is achieved by keeping fields private and providing controlled methods to access or modify them.
+
+Example:
+
+private int duration;
+
+public int getDuration() {
+    return duration;
+}
+
+public void setDuration(int duration) {
+    if (duration < 0) {
+        throw new IllegalArgumentException("Duration cannot be negative");
+    }
+
+    this.duration = duration;
+}
+
+4. Validation
+
+The setter validates the data before changing the object state.
+
+Examples of invalid values include:
+
+• Negative parking duration
+• Negative floor number
+• Invalid slot number
+• Empty registration number
+
+5. Wrapper Classes and Autoboxing
+
+Java wrapper classes include Integer, Double, Boolean and others.
+
+Autoboxing automatically converts a primitive into its wrapper type.
+
+Example:
+
+Integer x = 10;
+
+A common risk is comparing Integer objects using ==.
+
+For example:
+
+Integer a = 1000;
+Integer b = 1000;
+
+a == b
+
+should not be used to check numerical equality because == compares object references.
+
+The correct comparison is:
+
+a.equals(b)
+
+6. Alternative – Public Fields
+
+If fields were made public, any class could directly modify them without validation.
+
+For example:
+
+ticket.duration = -50;
+
+This would allow invalid state.
+
+If validation were performed by calling code, every place that modifies the field would need to repeat the same validation logic.
+
+This increases duplication and maintenance cost.
+
+7. Complexity
+
+Simple validation such as checking whether duration is negative takes O(1) time.
+
+The benefit of encapsulation is not mainly computational efficiency; it is correctness, maintainability and protection of object state.
+
+Conclusion:
+
+Private fields and validating methods provide a safer and more maintainable design than public fields.
