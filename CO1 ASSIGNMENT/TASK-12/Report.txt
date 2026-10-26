@@ -1,0 +1,231 @@
+TASK 12 – RE-EVALUATE AND ADAPT THE DESIGN
+
+A. IMPACT ANALYSIS
+
+1. Changes in Requirements
+
+The university has introduced several new requirements.
+
+First, two new vehicle categories have been added:
+
+• E-bike
+• Delivery van
+
+Second, a new pricing rule has been introduced. Delivery vans are charged at double the car rate between 9 AM and 5 PM.
+
+Third, visitors can now purchase a one-day parking pass.
+
+Fourth, the parking facility has expanded from three floors to five floors.
+
+Finally, the number of slots can be different on each floor.
+
+2. Affected Classes
+
+Vehicle is affected because new vehicle types need to be supported.
+
+New subclasses EBike and DeliveryVan are added.
+
+Car is reused as the base class for DeliveryVan because a delivery van follows the basic car-like parking structure but has additional pricing behaviour.
+
+A Pass abstraction is introduced to support one-day visitor passes.
+
+ParkingFacility is affected because the facility now contains five floors with different slot counts.
+
+The pricing logic may also require modification or separation into a PricingRule abstraction as the system grows.
+
+3. Effect of Different Slot Counts
+
+A jagged array is appropriate because each floor may contain a different number of slots.
+
+For example:
+
+Floor 0 → 20 slots
+Floor 1 → 30 slots
+Floor 2 → 50 slots
+Floor 3 → 75 slots
+Floor 4 → 100 slots
+
+This can be represented as:
+
+String[][] slots;
+
+with different array lengths for each floor.
+
+4. Classes That Should Be Extended
+
+New vehicle categories should be added through subclasses instead of rewriting the existing Vehicle class.
+
+This allows the existing tested behaviour to remain unchanged.
+
+B. EVALUATION OF THE ORIGINAL DESIGN
+
+1. Adding New Vehicle Types
+
+The original inheritance design supports extension.
+
+A new vehicle type can be represented as a new subclass of Vehicle or an appropriate existing subclass.
+
+For example:
+
+class EBike extends Vehicle
+
+class DeliveryVan extends Car
+
+Therefore, existing vehicle classes do not need to be rewritten unnecessarily.
+
+2. Pricing Rules
+
+The original design keeps the basic vehicle rate in each vehicle type.
+
+However, the delivery van introduces a time-dependent pricing rule.
+
+If more special pricing rules are added in the future, keeping all pricing logic inside vehicle subclasses may make the design harder to maintain.
+
+Therefore, a PricingRule abstraction could eventually centralise complex pricing rules.
+
+3. Existing Classes
+
+The tested Vehicle, Car and TwoWheeler classes can remain unchanged where possible.
+
+New behaviour can be added through new subclasses and interfaces.
+
+Therefore, the original design is suitable but should be modified to support the changed requirements.
+
+C. ADAPTATION / REDESIGN
+
+The selected approach is MODIFY.
+
+The original inheritance-based design is retained because it already provides a suitable structure for vehicle specialisation.
+
+The design is modified by adding:
+
+• EBike
+• DeliveryVan
+• Pass interface
+• OneDayPass
+• Five-floor jagged parking structure
+
+1. E-bike
+
+EBike extends Vehicle.
+
+It has its own parking rate and a flat charging fee.
+
+2. Delivery Van
+
+DeliveryVan extends Car.
+
+During the period 9 AM to 5 PM, the delivery van is charged at double the car rate.
+
+Outside that period, the normal car-based fee is used.
+
+3. One-Day Pass
+
+Pass is represented using an interface.
+
+OneDayPass implements Pass.
+
+The pass is valid only for the specified day.
+
+A visitor with a valid one-day pass can receive the defined pass benefit according to the system rules.
+
+4. Five-Floor Parking Facility
+
+The parking facility uses a jagged array.
+
+Example:
+
+int[] slotsPerFloor = {20, 30, 50, 75, 100};
+
+The structure can represent different numbers of slots on different floors.
+
+5. Revised Structure
+
+Vehicle
+├── TwoWheeler
+├── Car
+│   ├── ElectricCar
+│   └── DeliveryVan
+└── EBike
+
+Chargeable
+└── ElectricCar
+
+Pass
+└── OneDayPass
+
+ParkingFacility
+└── five-floor jagged slot structure
+
+D. EVIDENCE-BASED DEFENCE
+
+1. Number of Existing Classes Changed
+
+The original Vehicle, TwoWheeler and Car structure can remain unchanged.
+
+The new requirements are mainly handled through new subclasses and supporting abstractions.
+
+This reduces the number of existing tested classes that need modification.
+
+2. Ease of Adding Future Vehicle Types
+
+The design makes future extensions easier.
+
+For example, if an electric bus is introduced, a new subclass can be created:
+
+class ElectricBus extends Vehicle implements Chargeable
+
+The existing Vehicle class does not need to be rewritten.
+
+3. Testing New Categories
+
+E-bike test:
+
+Input:
+E-bike registration number: TN10EB1234
+
+Expected:
+E-bike is allocated a free parking slot and its flat charging fee is applied.
+
+Delivery van test:
+
+Input:
+Vehicle: Delivery Van
+Entry time: 10:00 AM
+
+Expected:
+The applicable car fee is doubled because the entry occurs between 9 AM and 5 PM.
+
+One-day pass test:
+
+Input:
+Visitor with a valid one-day pass
+
+Expected:
+The pass is recognised as valid and the defined pass benefit is applied.
+
+4. Trade-Offs
+
+Advantages:
+
+• New vehicle types can be added through inheritance.
+• Existing tested classes can remain unchanged.
+• Jagged arrays support different slot counts.
+• Interfaces allow additional capabilities.
+• The design is easier to extend.
+
+Disadvantages:
+
+• The number of classes increases.
+• Complex pricing rules may eventually require a separate pricing-rule system.
+• More abstractions can make a small system harder to understand.
+
+5. Final Decision
+
+The original design should be MODIFIED rather than completely redesigned.
+
+The existing object-oriented structure is suitable because it already uses inheritance, polymorphism, abstraction and encapsulation.
+
+The new requirements can be handled mainly through new subclasses, an interface for passes and a jagged array for the expanded parking facility.
+
+Therefore, the modified design provides a balance between reusability, extensibility and simplicity.
