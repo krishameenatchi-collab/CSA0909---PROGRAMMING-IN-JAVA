@@ -1,0 +1,109 @@
+TASK 8 – APPLY POLYMORPHISM
+
+1. Compile-Time Polymorphism
+
+Compile-time polymorphism is demonstrated using method overloading.
+
+For example, the system can provide:
+
+calculateFee(int minutes)
+
+and:
+
+calculateFee(LocalTime entry, LocalTime exit)
+
+Both methods have the same name but different parameter lists.
+
+The compiler determines which method should be called based on the arguments supplied.
+
+2. Runtime Polymorphism
+
+Runtime polymorphism is demonstrated using a Vehicle reference that refers to different subclass objects.
+
+Example:
+
+Vehicle[] parked = {
+    new TwoWheeler("TN01A1"),
+    new Car("TN02B2"),
+    new ElectricCar("TN03C3")
+};
+
+The array has the declared type Vehicle[], but it contains different actual object types.
+
+3. Dynamic Method Dispatch
+
+When:
+
+v.calculateFee(130);
+
+is called, Java determines the actual object type at runtime and invokes the appropriate overridden ratePerHour() method.
+
+For TwoWheeler:
+
+ratePerHour() = 10
+
+130 minutes requires 3 started hours.
+
+Fee = 3 × 10 = Rs 30.
+
+For Car:
+
+Fee = 3 × 30 = Rs 90.
+
+For ElectricCar:
+
+Parking fee = Rs 90.
+
+Charging fee = 10 × 12 = Rs 120.
+
+Total = Rs 210.
+
+4. Dynamic Dispatch Trace
+
+Declared reference type:
+
+Vehicle
+
+Actual object:
+
+ElectricCar
+
+Method call:
+
+calculateFee(130)
+
+The calculateFee() method belongs to Vehicle, but ratePerHour() is dynamically dispatched to the Car implementation inherited by ElectricCar.
+
+5. Why Polymorphism is Useful
+
+Without polymorphism, the program would require long if-else or instanceof chains to determine the vehicle type.
+
+Polymorphism allows the program to work with the general Vehicle type while automatically selecting specialised behaviour.
+
+6. Equality Result
+
+The last line prints true because both objects have the same registration number:
+
+TN02B2
+
+The equals() method compares registration numbers rather than object references.
+
+Therefore:
+
+new Car("TN02B2").equals(new ElectricCar("TN02B2"))
+
+returns true.
+
+This is correct if the system defines vehicle identity using registration number regardless of vehicle subclass.
+
+7. Complexity
+
+Dynamic method dispatch for a call is effectively O(1).
+
+An alternative using instanceof checks could require up to k checks for k vehicle types.
+
+Therefore, the polymorphic design is cleaner and easier to maintain as the number of vehicle types increases.
+
+Conclusion:
+
+The design demonstrates both compile-time polymorphism through overloading and runtime polymorphism through method overriding and dynamic dispatch.
