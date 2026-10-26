@@ -1,0 +1,58 @@
+TASK 7 – OVERRIDE AND SPECIALISE BEHAVIOUR
+
+Method overriding allows a subclass to provide its own implementation of a method inherited from its superclass.
+
+1. calculateFee()
+
+The ratePerHour() method is overridden by vehicle subclasses because different vehicle types have different parking rates.
+
+For example:
+
+TwoWheeler → Rs 10 per hour
+Car → Rs 30 per hour
+
+The @Override annotation is used to indicate that a superclass method is being overridden.
+
+2. Rules of Overriding
+
+The overriding method must have the same method signature.
+
+The return type must be compatible.
+
+The overriding method cannot reduce the access level of the inherited method.
+
+3. final
+
+A final variable cannot be reassigned.
+
+A final method cannot be overridden.
+
+A final class cannot be extended.
+
+The registration number can be final because it should not change after a vehicle is created.
+
+4. toString()
+
+The toString() method is overridden to provide meaningful vehicle information instead of the default Object representation.
+
+5. equals()
+
+The equals() method is overridden so that two Vehicle objects having the same registration number are considered equal.
+
+6. hashCode()
+
+hashCode() is overridden consistently with equals(). If two vehicles are equal according to equals(), they must produce the same hash code.
+
+7. Alternative – switch
+
+Instead of overriding behaviour, a single calculateFee() method could use a switch on vehicle type.
+
+For k vehicle types, the switch contains up to k cases.
+
+The actual computation of one selected case is O(1), but the design requires modifying the central method when a new vehicle type is introduced.
+
+With overriding, the correct method is selected through dynamic dispatch and new vehicle types can be added as new subclasses.
+
+Conclusion:
+
+Method overriding provides better extensibility because vehicle-specific behaviour remains inside the corresponding subclass.
