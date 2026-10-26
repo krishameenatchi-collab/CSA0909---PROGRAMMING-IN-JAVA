@@ -1,0 +1,95 @@
+TASK 9 – INTRODUCE ABSTRACTION
+
+1. Abstract Class
+
+Vehicle is designed as an abstract class.
+
+A vehicle is a general concept and the exact parking rate depends on the specific vehicle type.
+
+Therefore, Vehicle contains common state and behaviour while leaving ratePerHour() abstract.
+
+Example:
+
+abstract class Vehicle {
+
+    private final String regNo;
+
+    protected Vehicle(String regNo) {
+        this.regNo = regNo;
+    }
+
+    protected abstract double ratePerHour();
+}
+
+2. Abstract Method
+
+ratePerHour() is abstract because different vehicle types have different rates.
+
+TwoWheeler provides its own rate.
+
+Car provides its own rate.
+
+3. Interface
+
+Chargeable is represented using an interface.
+
+Example:
+
+interface Chargeable {
+    double chargingFee(int kWh);
+}
+
+Charging is a capability rather than a property that every vehicle must have.
+
+4. Why Abstract Class?
+
+An abstract class can contain:
+
+• Instance variables
+• Constructors
+• Concrete methods
+• Abstract methods
+
+Vehicle needs a registration number and therefore benefits from an abstract class.
+
+5. Why Interface?
+
+An interface is useful for defining a capability.
+
+ElectricCar can implement Chargeable without requiring all Vehicle subclasses to support charging.
+
+6. Multiple Behaviours
+
+A class can implement multiple interfaces.
+
+For example:
+
+class ElectricCar extends Car implements Chargeable
+
+A class could implement additional interfaces such as Payable or Insurable if required.
+
+7. Default and Static Interface Methods
+
+A default method can provide common optional behaviour to implementing classes.
+
+A static interface method can provide utility functionality associated with the interface itself.
+
+8. Alternative Design
+
+If Vehicle were changed into an interface, it could define method contracts but could not provide the same constructor-based initialisation of registration number.
+
+An interface does not replace the role of a class containing common object state and constructors.
+
+If Chargeable were changed into an abstract class, Java would not allow ElectricCar to extend both Car and Chargeable because Java does not support multiple class inheritance.
+
+Therefore, Chargeable is better represented as an interface.
+
+9. Complexity
+
+Both abstract-class method calls and interface method calls are effectively O(1) for the simple operations used in this system.
+
+Object space remains proportional to the fields stored by each object.
+
+Conclusion:
+
+The design uses Vehicle as an abstract class because it provides common state and behaviour, while Chargeable is an interface because charging represents an additional capability.
