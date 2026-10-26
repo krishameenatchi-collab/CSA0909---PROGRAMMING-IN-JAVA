@@ -1,0 +1,107 @@
+TASK 3 – DESIGN THE CONTROL LOGIC
+
+1. Slot Allocation Pseudocode
+
+START
+
+Read vehicle registration number.
+
+FOR each floor from first floor to last floor
+
+    FOR each slot in the current floor
+
+        IF the slot is free THEN
+
+            Store the vehicle registration number in the slot.
+
+            Return the floor number and slot number.
+
+        END IF
+
+    END FOR
+
+END FOR
+
+If all slots are occupied, return null.
+
+END
+
+2. Fee Calculation Pseudocode
+
+START
+
+Read vehicle type and parking duration.
+
+Calculate the number of billable hours using ceiling division.
+
+IF the user has a valid free parking pass THEN
+
+    fee = 0
+
+ELSE
+
+    Determine the vehicle-specific hourly rate.
+
+    Calculate the parking fee.
+
+    IF the calculated fee is greater than the daily maximum THEN
+
+        fee = daily maximum.
+
+    END IF
+
+END IF
+
+Return the fee.
+
+END
+
+3. Use of Loops
+
+A nested loop is used to search the parking facility. The outer loop visits each floor and the inner loop visits each slot on that floor.
+
+The search stops immediately when a free slot is found because the allocate() method uses return.
+
+If all slots are occupied, the loops finish and null is returned.
+
+4. Use of break, continue and return
+
+The return statement is useful because allocation is completed as soon as the first suitable free slot is found.
+
+A break statement could also be used to stop a loop, but return is simpler because the method must immediately return the allocated floor and slot.
+
+A continue statement could be used to skip an unsuitable slot, but it is not necessary in the basic implementation.
+
+5. No Available Slot
+
+If every slot is occupied, allocate() returns null. This indicates that the parking facility is currently full.
+
+6. Complexity
+
+Let F be the number of floors and S be the maximum number of slots per floor.
+
+Worst-case allocation examines every slot.
+
+Time complexity = O(F × S)
+
+If N is the total number of slots, the same complexity can be expressed as O(N).
+
+Space complexity of the parking array = O(N).
+
+7. Alternative Approach
+
+If each floor maintained a count of free slots and a stack containing its free slot numbers, allocation could obtain a free slot directly instead of scanning all slots.
+
+With a stack of free slots:
+
+allocate() → O(1)
+
+release() → O(1)
+
+Additional space would be O(N) for storing free slot information.
+
+The original scanning approach uses less additional bookkeeping but can require O(N) time for allocation in the worst case.
+
+Conclusion:
+
+The nested-loop approach is simple, easy to understand and suitable for the given assignment. A stack-based free-slot structure would be more efficient for a very large parking facility.
